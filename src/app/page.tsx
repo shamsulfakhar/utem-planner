@@ -1,13 +1,13 @@
 'use client'
 
 import React from 'react'
+import PlannerEditor from '@/components/PlannerEditor'
 
 export default function Home() {
   return (
     <main className="min-h-screen p-4">
       <div className="container mx-auto">
-        <h1 className="text-2xl font-bold mb-4">UTeM Planner Generator</h1>
-        {/* Components will be added here */}
+        <PlannerEditor />
       </div>
     </main>
   )
