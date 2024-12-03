@@ -14,55 +14,40 @@ interface DayCellProps {
 const DayCell = ({ date, dayName, isWeekend, isHoliday, events }: DayCellProps) => {
   const formattedDate = date.getDate().toString().padStart(2, '0')
   const isSalaryDay = date.getDate() === 25
-  
-  const renderEvents = () => {
-    let items = []
-    if (isSalaryDay) {
-      items.push(<span key="salary" className="mr-1">💰 Gaji</span>)
-    }
-    
-    events.forEach((event, index) => {
-      let eventStyle = ''
-      switch (event.type) {
-        case 'academic':
-          eventStyle = 'border-b border-dashed border-gray-500'
-          break
-        case 'administrative':
-          eventStyle = 'border-b border-dotted border-gray-500'
-          break
-        case 'holiday':
-          eventStyle = 'border-b border-solid border-gray-500'
-          break
-        case 'personal':
-          eventStyle = 'border-b border-double border-gray-500'
-          break
-      }
-      
-      items.push(
-        <span key={event.id} className={`mr-1 ${eventStyle}`}>
-          {event.title}
-          {event.endDate && " →"}
-        </span>
-      )
-    })
-    
-    return items
-  }
 
   return (
     <div 
-      className={`h-8 px-2 py-1 flex items-center ${
-        isWeekend || isHoliday ? 'bg-gray-200' : ''
-      }`}
+      className={`
+        h-[8mm] min-h-[8mm] 
+        border-b border-gray-300 
+        flex items-center 
+        ${isWeekend || isHoliday ? 'bg-[#66666640]' : ''}
+      `}
     >
-      <div className="flex items-center space-x-2 w-full">
-        <div className="flex-none w-16 text-xs">
-          <span className="w-8 inline-block opacity-70">{dayName}</span>
-          <span className="w-8 inline-block font-medium">{formattedDate}</span>
-        </div>
-        <div className="flex-1 text-xs truncate">
-          {renderEvents()}
-        </div>
+      {/* Day and Date */}
+      <div className="w-[20%] flex items-center pl-2 space-x-1">
+        <span className="text-[10px] w-8 opacity-75">{dayName}</span>
+        <span className="text-xs font-medium">{formattedDate}</span>
+      </div>
+
+      {/* Events */}
+      <div className="flex-1 pr-2 text-[10px] truncate">
+        {isSalaryDay && (
+          <span className="inline-block mr-1">💰 Gaji</span>
+        )}
+        {events.map((event, index) => (
+          <span 
+            key={event.id} 
+            className={`
+              inline-block mr-1
+              ${event.type === 'academic' ? 'border-b border-dashed' : ''}
+              ${event.type === 'holiday' ? 'border-b border-solid' : ''}
+            `}
+          >
+            {event.title}
+            {event.endDate && " →"}
+          </span>
+        ))}
       </div>
     </div>
   )
