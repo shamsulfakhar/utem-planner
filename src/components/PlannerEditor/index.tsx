@@ -4,6 +4,7 @@ import React from 'react'
 import { usePlannerSettings } from '@/lib/PlannerContext'
 import MonthSection from './MonthSection'
 import HolidayManager from './HolidayManager'
+import EventEditor from './EventEditor'
 
 const PlannerEditor = () => {
   const { settings } = usePlannerSettings()
@@ -12,7 +13,10 @@ const PlannerEditor = () => {
 
   return (
     <div className="space-y-4">
-      <HolidayManager />
+      <div className="grid grid-cols-2 gap-4">
+        <HolidayManager />
+        <EventEditor />
+      </div>
       
       <div className="bg-white rounded-lg shadow p-4">
         <div className="text-center mb-4">
