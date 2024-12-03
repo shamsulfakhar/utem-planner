@@ -19,17 +19,13 @@ const MonthSection = ({ month, year, events, holidays }: MonthSectionProps) => {
     'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
   ]
 
-  const dayNames = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-
   const getDaysInMonth = () => {
     const date = new Date(year, month, 1)
     const days = []
-    
     while (date.getMonth() === month) {
       days.push(new Date(date))
       date.setDate(date.getDate() + 1)
     }
-    
     return days
   }
 
@@ -51,19 +47,19 @@ const MonthSection = ({ month, year, events, holidays }: MonthSectionProps) => {
   }
 
   return (
-    <div className="flex flex-col" style={{ fontFamily: settings.fonts.body }}>
+    <div className="min-h-full" style={{ fontFamily: settings.fonts.body }}>
       {/* Month Header */}
-      <div className="px-2 py-1">
-        <h2 className="text-lg font-bold">{monthNames[month]}</h2>
+      <div className="p-2 bg-gray-50 border-b border-gray-200">
+        <h2 className="text-base font-bold">{monthNames[month]}</h2>
       </div>
 
       {/* Days */}
-      <div className="flex-1">
+      <div className="divide-y divide-gray-200">
         {getDaysInMonth().map((date) => (
           <DayCell
             key={date.toISOString()}
             date={date}
-            dayName={dayNames[date.getDay()]}
+            dayName={date.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}
             isWeekend={date.getDay() === 0 || date.getDay() === 6}
             isHoliday={isHoliday(date)}
             events={getEventsForDate(date)}
