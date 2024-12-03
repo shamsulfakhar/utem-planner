@@ -8,7 +8,7 @@ interface MonthSectionProps {
   month: number
   year: number
   events: Event[]
-  holidays: string[] // Array of holiday dates in YYYY-MM-DD format
+  holidays: string[]
 }
 
 const MonthSection = ({ month, year, events, holidays }: MonthSectionProps) => {
@@ -33,7 +33,15 @@ const MonthSection = ({ month, year, events, holidays }: MonthSectionProps) => {
 
   const getEventsForDate = (date: Date) => {
     const dateStr = date.toISOString().split('T')[0]
-    return events.filter(event => event.date === dateStr)
+    return events.filter(event => {
+      if (!event.endDate) {
+        return event.date === dateStr
+      }
+      // Handle multi-day events
+      const eventStart = new Date(event.date)
+      const eventEnd = new Date(event.endDate)
+      return date >= eventStart && date <= eventEnd
+    })
   }
 
   const isHoliday = (date: Date) => {
@@ -41,20 +49,32 @@ const MonthSection = ({ month, year, events, holidays }: MonthSectionProps) => {
     return holidays.includes(dateStr)
   }
 
+  const daysInMonth = getDaysInMonth()
+
   return (
-    <div className="flex-1 min-w-0">
-      <h2 className="text-lg font-bold mb-2">{monthNames[month]}</h2>
-      <div className="border-t border-gray-300">
-        {getDaysInMonth().map((date) => (
-          <DayCell
-            key={date.toISOString()}
-            date={date}
-            dayName={dayNames[date.getDay()]}
-            isWeekend={date.getDay() === 0 || date.getDay() === 6}
-            isHoliday={isHoliday(date)}
-            events={getEventsForDate(date)}
-          />
-        ))}
+    <div className="flex-1 min-w-0 border-r border-gray-200 last:border-r-0">
+      {/* Month Header */}
+      <h2 className="text-base font-bold px-2 py-1 border-b border-gray-300">
+        {monthNames[month]}
+      </h2>
+
+      {/* Days Grid */}
+      <div className="divide-y divide-gray-200">
+        {daysInMonth.map((date) => {
+          const isWeekend = date.getDay() === 0 || date.getDay() === 6
+          const dateEvents = getEventsForDate(date)
+          
+          return (
+            <DayCell
+              key={date.toISOString()}
+              date={date}
+              dayName={dayNames[date.getDay()]}
+              isWeekend={isWeekend}
+              isHoliday={isHoliday(date)}
+              events={dateEvents}
+            />
+          )
+        })}
       </div>
     </div>
   )
