@@ -13,13 +13,16 @@ body {
 }
 
 /* A3 Paper size simulation */
-@media screen {
-  .max-w-\[297mm\] {
-    max-width: 297mm;
-  }
+.max-w-\[297mm\] {
+  max-width: 297mm;
 }
 
-/* Day cell height */
+/* Fixed height for day cells */
 .h-\[8mm\] {
   height: 8mm;
+}
+
+/* Ensure grid columns are equal width */
+.grid-cols-6 > * {
+  width: calc(100% / 6);
 }

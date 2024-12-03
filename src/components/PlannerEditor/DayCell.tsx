@@ -19,27 +19,27 @@ const DayCell = ({ date, dayName, isWeekend, isHoliday, events }: DayCellProps) 
     <div 
       className={`
         h-[8mm] min-h-[8mm] 
-        border-b border-gray-300 
+        border-b border-gray-200 
         flex items-center 
         ${isWeekend || isHoliday ? 'bg-[#66666640]' : ''}
       `}
     >
       {/* Day and Date */}
-      <div className="w-[20%] flex items-center pl-2 space-x-1">
-        <span className="text-[10px] w-8 opacity-75">{dayName}</span>
+      <div className="flex items-center gap-1 w-16 pl-1">
+        <span className="text-[10px] opacity-75 w-8">{dayName}</span>
         <span className="text-xs font-medium">{formattedDate}</span>
       </div>
 
-      {/* Events */}
-      <div className="flex-1 pr-2 text-[10px] truncate">
+      {/* Events Area */}
+      <div className="flex-1 pr-1 text-[10px] truncate flex items-center gap-1">
         {isSalaryDay && (
-          <span className="inline-block mr-1">💰 Gaji</span>
+          <span className="inline-block">💰 Gaji</span>
         )}
         {events.map((event) => (
           <span 
             key={event.id} 
             className={`
-              inline-block mr-1
+              inline-block
               ${event.type === 'academic' ? 'border-b border-dashed' : ''}
               ${event.type === 'holiday' ? 'border-b border-solid' : ''}
             `}

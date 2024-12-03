@@ -15,12 +15,14 @@ const PlannerEditor = () => {
   const months = Array.from({ length: 6 }, (_, i) => i)
 
   return (
-    <div className="container mx-auto p-4 max-w-[297mm]"> {/* A3 width */}
-      {/* Controls */}
-      <div className="mb-8 grid grid-cols-2 gap-4">
-        <HolidayManager />
-        <EventEditor />
-        <ThemeCustomizer className="col-span-2" />
+    <div className="max-w-[297mm] mx-auto px-4 py-8">
+      {/* Controls Section */}
+      <div className="space-y-4 mb-8">
+        <div className="grid grid-cols-2 gap-4">
+          <HolidayManager />
+          <EventEditor />
+        </div>
+        <ThemeCustomizer />
       </div>
 
       {/* Preview Toggle */}
@@ -33,30 +35,34 @@ const PlannerEditor = () => {
         </button>
       </div>
 
+      {/* Main Planner View */}
       {showPreview ? (
-        <PDFPreview />
+        <div className="h-[420mm] w-full">
+          <PDFPreview />
+        </div>
       ) : (
-        <div className="bg-white rounded shadow">
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header */}
-          <div className="p-4 text-center border-b">
+          <div className="p-4 border-b border-gray-200 bg-gray-50">
             <h1 
-              className="text-2xl font-bold"
+              className="text-2xl font-bold text-center"
               style={{ fontFamily: settings.fonts.header }}
             >
               UTeM 2024 Planner Semester 2 Session 2023/2024
             </h1>
           </div>
 
-          {/* Planner Grid */}
-          <div className="grid grid-cols-6 divide-x divide-gray-200">
+          {/* Calendar Grid */}
+          <div className="grid grid-cols-6 divide-x divide-gray-200 m-4">
             {months.map((month) => (
-              <MonthSection
-                key={month}
-                month={month}
-                year={year}
-                events={settings.events}
-                holidays={settings.holidays.map(h => h.date)}
-              />
+              <div key={month} className="px-1">
+                <MonthSection
+                  month={month}
+                  year={year}
+                  events={settings.events}
+                  holidays={settings.holidays.map(h => h.date)}
+                />
+              </div>
             ))}
           </div>
         </div>

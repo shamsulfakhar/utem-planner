@@ -12,12 +12,13 @@ interface MonthSectionProps {
   holidays: string[]
 }
 
+const monthNames = [
+  'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+  'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+]
+
 const MonthSection = ({ month, year, events, holidays }: MonthSectionProps) => {
   const { settings } = usePlannerSettings()
-  const monthNames = [
-    'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
-    'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
-  ]
 
   const getDaysInMonth = () => {
     const date = new Date(year, month, 1)
@@ -47,14 +48,13 @@ const MonthSection = ({ month, year, events, holidays }: MonthSectionProps) => {
   }
 
   return (
-    <div className="min-h-full" style={{ fontFamily: settings.fonts.body }}>
-      {/* Month Header */}
+    <div className="flex flex-col h-full">
       <div className="p-2 bg-gray-50 border-b border-gray-200">
-        <h2 className="text-base font-bold">{monthNames[month]}</h2>
+        <h2 className="text-base font-bold" style={{ fontFamily: settings.fonts.header }}>
+          {monthNames[month]}
+        </h2>
       </div>
-
-      {/* Days */}
-      <div className="divide-y divide-gray-200">
+      <div className="flex-1">
         {getDaysInMonth().map((date) => (
           <DayCell
             key={date.toISOString()}
