@@ -35,7 +35,7 @@ const DayCell = ({ date, dayName, isWeekend, isHoliday, events }: DayCellProps) 
         {isSalaryDay && (
           <span className="inline-block mr-1">💰 Gaji</span>
         )}
-        {events.map((event, index) => (
+        {events.map((event) => (
           <span 
             key={event.id} 
             className={`
