@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: 'Times-Roman',
   },
   monthsContainer: {
     flexDirection: 'row',
@@ -36,14 +37,18 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: 8,
+    fontFamily: 'Helvetica',
   },
   eventText: {
     fontSize: 6,
+    fontFamily: 'Helvetica',
   },
 })
 
 const PDFPreview = () => {
   const { settings } = usePlannerSettings()
+  const year = 2024
+  const months = Array.from({ length: 6 }, (_, i) => i)
 
   return (
     <div className="h-screen">
@@ -52,10 +57,17 @@ const PDFPreview = () => {
           <Page size="A3" orientation="landscape" style={styles.page}>
             <View style={styles.header}>
               <Text style={styles.title}>
-                UTeM 2024 Planner Semester 2 Session 2023/2024
+                UTeM 2024 Planner {/* Theme: {settings.theme} */}
               </Text>
             </View>
-            {/* PDF content will be implemented here */}
+            <View style={styles.monthsContainer}>
+              {months.map((month) => (
+                <View key={month} style={styles.monthSection}>
+                  <Text style={styles.title}>{month + 1}</Text>
+                  {/* We'll add the calendar content here */}
+                </View>
+              ))}
+            </View>
           </Page>
         </Document>
       </PDFViewer>
