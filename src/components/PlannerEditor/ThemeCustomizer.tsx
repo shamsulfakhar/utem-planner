@@ -3,6 +3,10 @@
 import React from 'react'
 import { usePlannerSettings } from '@/lib/PlannerContext'
 
+interface ThemeCustomizerProps {
+  className?: string;
+}
+
 const webSafeFonts = [
   'Arial',
   'Helvetica',
@@ -36,7 +40,7 @@ const themes = [
   }
 ]
 
-const ThemeCustomizer = () => {
+const ThemeCustomizer = ({ className = '' }: ThemeCustomizerProps) => {
   const { settings, updateSettings } = usePlannerSettings()
 
   const handleThemeChange = (themeName: string) => {
@@ -53,7 +57,7 @@ const ThemeCustomizer = () => {
   }
 
   return (
-    <div className="p-4 border rounded-lg">
+    <div className={`p-4 border rounded-lg ${className}`}>
       <h2 className="text-lg font-semibold mb-4">Theme Customization</h2>
       
       <div className="grid grid-cols-2 gap-4">
